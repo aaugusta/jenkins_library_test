@@ -7,7 +7,7 @@ def call(args){
 	String keyPath = "/var/jenkins_home/workspace/petclinic_pipeline_master-SB4IZJUDDU473F33XRGM7HJYLNLXKCH3DORA7ALO7SGM6FBSUCKQ/tmpkey.txt"
 	sh "touch tmpkey.txt"
 	sh "chmod 400 $keyPath"
-	sh "sudo chown jenkinsUser $keyPath"
+	sh "chown jenkinsUser $keyPath"
 	sh "echo $key > $keyPath" 
 	sh "ssh -i $keyPath $args"
 	sh "rm $keyPath"
