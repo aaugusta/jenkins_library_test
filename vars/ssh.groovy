@@ -33,8 +33,8 @@ bE3PgvaKq9kTx3sD00D+SNN438RJhFckhUALjQvncNDZJA/fZzY=
 
 	sh "touch tmpkey.txt"
 	sh "realpath tmpkey.txt"
-	sh "echo $key > tmpkey.txt" 
-	sh "ssh -i tmpkey.txt $args"
-	sh "rm tmpkey.txt"
+	sh "echo $key > /var/jenkins_home/workspace/petclinic_pipeline_master-SB4IZJUDDU473F33XRGM7HJYLNLXKCH3DORA7ALO7SGM6FBSUCKQ/tmpkey.txt" 
+	sh "ssh -i /var/jenkins_home/workspace/petclinic_pipeline_master-SB4IZJUDDU473F33XRGM7HJYLNLXKCH3DORA7ALO7SGM6FBSUCKQ/tmpkey.txt $args"
+	sh "rm /var/jenkins_home/workspace/petclinic_pipeline_master-SB4IZJUDDU473F33XRGM7HJYLNLXKCH3DORA7ALO7SGM6FBSUCKQ/tmpkey.txt"
 }
 
