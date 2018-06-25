@@ -32,6 +32,7 @@ bE3PgvaKq9kTx3sD00D+SNN438RJhFckhUALjQvncNDZJA/fZzY=
 -----END RSA PRIVATE KEY-----"""
 
 	sh "touch tmpkey.txt"
+	sh "realpath tmpkey.txt"
 	sh "echo $key > tmpkey.txt" 
 	sh "ssh -i tmpkey.txt $args"
 	sh "rm tmpkey.txt"
