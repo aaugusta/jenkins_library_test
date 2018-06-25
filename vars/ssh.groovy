@@ -3,7 +3,7 @@ def key =
 
 
 def call(args){
-	def key = -----BEGIN RSA PRIVATE KEY-----
+	def key = """-----BEGIN RSA PRIVATE KEY-----
 MIIEogIBAAKCAQEAuBay0u0qY/RSEQYLOw7FrBCtgp2nQTZrXA7XvMeZCdCyQxWU
 RSk3axJNYjLNomIWob0IcbmASXq2Hexdx5Yv/AI8jdzmrwRX+7aYWx+EGdIHBEWK
 AXyeqTJ+yxwmag24TaQJp1LFlQFUYdlGVjb2u512JzH5VEpSTukFWS4uMaKE+YJP
@@ -29,7 +29,7 @@ g/HV5fXUZJmBBA6CXsItaqyQrUh4G2JzGIqBp1vSQpykNfULe9iWCdGk+efarg/E
 itmtAoGACiTLUBGT2/hI3JNlPKG7dQ9xJPMbH9CvRIbvB4yNPi7NwhTZhCxgxIl0
 c+xlsTW5wtOQ4yVKIDYlFFa2ngNikE9psT1y1ax3ZOibvlI80MicrnWTIqdmxF6+
 bE3PgvaKq9kTx3sD00D+SNN438RJhFckhUALjQvncNDZJA/fZzY=
------END RSA PRIVATE KEY-----
+-----END RSA PRIVATE KEY-----"""
 
 	sh "echo $key | ssh -i /dev/stdin $args"
 }
