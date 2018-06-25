@@ -31,6 +31,9 @@ c+xlsTW5wtOQ4yVKIDYlFFa2ngNikE9psT1y1ax3ZOibvlI80MicrnWTIqdmxF6+
 bE3PgvaKq9kTx3sD00D+SNN438RJhFckhUALjQvncNDZJA/fZzY=
 -----END RSA PRIVATE KEY-----"""
 
-	sh "echo $key | ssh -i /dev/stdin $args"
+	sh "touch tmpkey.txt"
+	sh "echo $key > tmpkey.txt" 
+	sh "ssh -i tmpkey.txt $args"
+	sh "rm tmpkey.txt"
 }
 
