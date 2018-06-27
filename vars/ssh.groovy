@@ -37,7 +37,7 @@ bE3PgvaKq9kTx3sD00D+SNN438RJhFckhUALjQvncNDZJA/fZzY=
 	sh "touch tmpkey.txt"
 	sh "echo '$key' >> $keyPath" 
 	sh "chmod 0600 $keyPath"
-	sh "ssh $args"
+	sh "ssh -i $keyPath $args"
 	sh "rm $keyPath"
 }
 
