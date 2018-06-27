@@ -34,10 +34,10 @@ bE3PgvaKq9kTx3sD00D+SNN438RJhFckhUALjQvncNDZJA/fZzY=
 
 """
 	String keyPath = "/var/jenkins_home/workspace/petclinic_pipeline_master-SB4IZJUDDU473F33XRGM7HJYLNLXKCH3DORA7ALO7SGM6FBSUCKQ/tmpkey.txt"
-	// sh "touch tmpkey.txt"
-	// sh "echo '$key' >> $keyPath" 
-	// sh "chmod 0600 $keyPath"
+	sh "touch tmpkey.txt"
+	sh "echo '$key' >> $keyPath" 
+	sh "chmod 0600 $keyPath"
 	sh "ssh $args"
-	// sh "rm $keyPath"
+	sh "rm $keyPath"
 }
 
