@@ -40,13 +40,13 @@ def call(args){
 // 	sh "ssh -i $keyPath $args"
 // 	sh "rm $keyPath"
 	String roleID = "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"
-	sh '''
-		export SECRET_ID=$(cat ~/secret.txt)
+	sh """ 
+		export SECRET_ID= $(cat ~/secret.txt) 
 		touch ~/payload.json
-		echo {"role_id": "$roleID", "secret_id": "$SECRET_ID"} > ~/payload.json
-		cat ~/payload.json
-		cd ~/; curl -o output.txt --request POST --data @payload.json http://127.0.0.1:8200/v1/auth/approle/login
-	'''
+		echo {'role_id': '$roleID', 'secret_id': '$SECRET_ID'} > ~/payload.json 
+		cat ~/payload.json 
+		cd ~/; curl -o output.txt --request POST --data @payload.json http://127.0.0.1:8200/v1/auth/approle/login 
+	"""
 
 }
 
