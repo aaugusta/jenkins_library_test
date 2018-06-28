@@ -39,11 +39,14 @@ def call(args){
 // 	sh "chmod 0600 $keyPath"
 // 	sh "ssh -i $keyPath $args"
 // 	sh "rm $keyPath"
-
+	sh 'echo "starting process..."'
 	def proc = "curl http://127.0.0.1:8200/v1/sys/init".execute()
+	sh 'echo "redirecting output to buffer...'
 	def outputStream = new StringBuffer()
 	proc.waitForProcessOutput(outputStream, System.err)
+	sh 'echo "process finished"'
 	def str = outputStream.toString()
+	sh 'echo "converting output to string...'
 	sh 'echo $str'
 
 	
