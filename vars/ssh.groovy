@@ -41,7 +41,7 @@ def call(args){
 // 	sh "rm $keyPath"
 	def roleID = "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"
 	sh 'export SECRET_ID=$(cat ~/secret.txt)'
-	sh 'curl -o output.txt --request POST --data {"role_id": "$roleID", "secret_id": "$SECRET_ID"} http://127.0.0.1:8200/v1/auth/approle/login'
+	sh 'curl -o output.txt --request POST --data '{"role_id": "$roleID", "secret_id": "$SECRET_ID"}' http://127.0.0.1:8200/v1/auth/approle/login'
 	
 
 }
