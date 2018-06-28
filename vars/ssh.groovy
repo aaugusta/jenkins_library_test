@@ -39,7 +39,7 @@ def call(args){
 // 	sh "chmod 0600 $keyPath"
 // 	sh "ssh -i $keyPath $args"
 // 	sh "rm $keyPath"
-	def roleID = d2ad2ecf-7105-168b-6b15-5e4c56d63f10
+	def roleID = "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"
 	sh 'curl -o output.txt --request POST --data {"role_id": "$roleID", "secret_id": $args} http://127.0.0.1:8200/v1/auth/approle/login'
 	
 
