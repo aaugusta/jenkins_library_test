@@ -39,16 +39,8 @@ def call(args){
 // 	sh "chmod 0600 $keyPath"
 // 	sh "ssh -i $keyPath $args"
 // 	sh "rm $keyPath"
-	sh 'echo "starting process..."'
-	def proc = "curl http://127.0.0.1:8200/v1/sys/init".execute()
-	sh 'echo "redirecting output to buffer...'
-	def outputStream = new StringBuffer()
-	proc.waitForProcessOutput(outputStream, System.err)
-	sh 'echo "process finished"'
-	def str = outputStream.toString()
-	sh 'echo "converting output to string...'
-	sh 'echo $str'
-
+	def roleID = d2ad2ecf-7105-168b-6b15-5e4c56d63f10
+	sh 'curl -o output.txt --request POST --data {"role_id": "$roleID", "secret_id": $args} http://127.0.0.1:8200/v1/auth/approle/login'
 	
 
 }
