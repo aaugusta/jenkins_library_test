@@ -39,7 +39,7 @@ def call(args){
 // 	sh "chmod 0600 $keyPath"
 // 	sh "ssh -i $keyPath $args"
 // 	sh "rm $keyPath"
-	def roleID = "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"
+	String roleID = "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"
 	sh '''
 		export SECRET_ID=$(cat ~/secret.txt)
 		touch ~/payload.json
