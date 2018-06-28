@@ -43,6 +43,7 @@ def call(args){
 	sh 'export SECRET_ID=$(cat ~/secret.txt)'
 	sh 'touch ~/payload.json'
 	sh 'echo {"role_id": "$roleID", "secret_id": "$SECRET_ID"} > ~/payload.json'
+	sh 'cat ~/payload.json'
 	sh 'cd ~/; curl -o output.txt --request POST --data @payload.json http://127.0.0.1:8200/v1/auth/approle/login'
 	
 
