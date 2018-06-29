@@ -41,15 +41,16 @@ def call(args){
 // 	sh "rm $keyPath"
 	String roleID = "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"
 	String vaultToken = args
-	String output = sh(script: """ 
-		cd ~/
-		export VAULT_ADDR='http://127.0.0.1:8200'
+	sh """cd ~/
+		"export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken'
+	"""
+	String output = sh(script: """ 
 		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id
 	""", returnStdout: true)
-	int index = output.lastIndexOf('\n')
-	String secretID = output.substring(index)
-	sh "echo '$secretID'"
+	//int index = output.lastIndexOf('\n')
+//	String secretID = output.substring(index)
+	sh "echo '$output'"
 	//	./vault kv get -field=test secret/hello > output.txt
 	//	"""
 
