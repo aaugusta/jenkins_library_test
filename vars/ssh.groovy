@@ -40,14 +40,15 @@ def call(args){
 // 	sh "ssh -i $keyPath $args"
 // 	sh "rm $keyPath"
 	String roleID = "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"
-	sh """ 
-		export SECRET_ID= \$(cat ~/secret.txt) 
-		echo \$SECRET_ID
-		touch ~/payload.json
-		echo {'role_id': '$roleID', 'secret_id': '\$SECRET_ID'} > ~/payload.json 
-		cat ~/payload.json 
-		cd ~/; curl -o output.txt --request POST --data @payload.json http://127.0.0.1:8200/v1/auth/approle/login 
-	"""
+	String vaultToken = args
+	sh ''' 
+		cd ~/
+		export VAULT_ADDR='http://127.0.0.1:8200'
+		./vault login "$vaultToken"
+		export SECRET_ID=$(./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id)
+		vault login $SECRET_ID
+		vault kv get -field=test secret/hello > output.txt
+		'''
 
 }
 
