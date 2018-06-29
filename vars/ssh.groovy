@@ -47,7 +47,7 @@ def call(args){
 		./vault login '$vaultToken'
 		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id | vault login
 
-		vault kv get -field=test secret/hello > output.txt
+		./vault kv get -field=test secret/hello > output.txt
 		"""
 
 }
