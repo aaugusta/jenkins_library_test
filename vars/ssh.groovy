@@ -8,7 +8,7 @@ def call(args){
 	String vaultToken = args
 	
 	//get secret ID
-	String output = sh(script: """ 
+	String secretID = sh(script: """ 
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken' > /dev/null
