@@ -24,13 +24,14 @@ def call(args){
 	
 	String secret = sh(script: """
 		cd ~/
+		set +x
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login $secretToken > /dev/null
 		touch output.txt
 		./vault kv get -field=test secret/hello
 	""", returnStdout:true)
 
-	sh "echo '$secret' > ~/output.txt"
+	sh "set +x; echo '$secret' > ~/output.txt"
 
 }
 
