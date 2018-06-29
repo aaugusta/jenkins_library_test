@@ -20,7 +20,7 @@ def call(args){
 	String secretID = output.substring(index+1).trim()
 	
 	//retrieve token to access secrets using roleID and secretID
-	String login = sh(script: """
+	String secretToken = sh(script: """
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault write -field=token auth/approle/login role_id='$roleID' secret_id='$secretID'
@@ -28,6 +28,7 @@ def call(args){
 	sh """
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
+		./vault login $secretToken
 		./vault kv get -field=test secret/hello > output.txt
 	"""
 	//	./vault kv get -field=test secret/hello > output.txt
