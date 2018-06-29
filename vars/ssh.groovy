@@ -44,11 +44,13 @@ def call(args){
 	sh """ 
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
+		echo "$VAULT_ADDR"
+		echo "${VAULT_ADDR}"
 		./vault login '$vaultToken'
-		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id | vault login
-
-		./vault kv get -field=test secret/hello > output.txt
-		"""
+		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id
+	"""
+	//	./vault kv get -field=test secret/hello > output.txt
+	//	"""
 
 }
 
