@@ -22,7 +22,7 @@ def call(args){
 		./vault write -field=token auth/approle/login role_id='$roleID' secret_id='$secretID'
 	""", returnStdout:true)
 	
-	String secret = sh(script: """
+	def secret = sh(script: """
 		cd ~/
 		set +x
 		export VAULT_ADDR='http://127.0.0.1:8200'
@@ -31,7 +31,7 @@ def call(args){
 		./vault kv get -field=test secret/hello
 	""", returnStdout:true)
 
-	sh "set +x; echo '$secret' > ~/output.txt"
+	sh(script: "set +x; echo '$secret' > ~/output.txt", returnStdout: true)
 
 }
 
