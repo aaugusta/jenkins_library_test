@@ -41,8 +41,9 @@ def call(args){
 // 	sh "rm $keyPath"
 	String roleID = "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"
 	String vaultToken = args
-	sh """cd ~/
-		"export VAULT_ADDR='http://127.0.0.1:8200'
+	sh """
+		cd ~/
+		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken'
 	"""
 	String output = sh(script: """ 
