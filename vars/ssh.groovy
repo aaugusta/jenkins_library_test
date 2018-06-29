@@ -9,6 +9,7 @@ def call(args){
 	
 	//get secret ID
 	String secretID = sh(script: """ 
+		set +x
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken' > /dev/null
@@ -17,14 +18,15 @@ def call(args){
 	
 	//retrieve token to access secrets using roleID and secretID
 	String secretToken = sh(script: """
+		set +x
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault write -field=token auth/approle/login role_id='$roleID' secret_id='$secretID'
 	""", returnStdout:true)
 	
 	def secret = sh(script: """
-		cd ~/
 		set +x
+		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login $secretToken > /dev/null
 		touch output.txt
