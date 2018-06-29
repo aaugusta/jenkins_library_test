@@ -41,14 +41,14 @@ def call(args){
 // 	sh "rm $keyPath"
 	String roleID = "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"
 	String vaultToken = args
-	sh ''' 
+	sh """ 
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
-		./vault login "$vaultToken"
-		export SECRET_ID=$(./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id)
-		vault login $SECRET_ID
+		./vault login '$vaultToken'
+		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id) | vault login
+
 		vault kv get -field=test secret/hello > output.txt
-		'''
+		"""
 
 }
 
