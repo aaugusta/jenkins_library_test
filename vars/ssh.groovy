@@ -11,10 +11,11 @@ def call(args){
 	String output = sh(script: """ 
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
-		./vault login '$vaultToken'
+		./vault login '$vaultToken' > /dev/null
 		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id
 	""", returnStdout: true)
 	
+	sh "echo '$output'"
 	//remove unnecessary output from previous shell command
 	int index = output.lastIndexOf('\n')
 	String secretID = output.substring(index+1).trim()
@@ -33,6 +34,7 @@ def call(args){
 		touch output.txt
 		./vault kv get -field=test secret/hello
 	""", returnStdout:true)
+
 	sh "echo '$secret' > ~/output.txt"
 
 }
