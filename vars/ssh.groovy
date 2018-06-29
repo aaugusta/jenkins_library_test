@@ -15,11 +15,6 @@ def call(args){
 		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id
 	""", returnStdout: true)
 	
-	sh "echo '$output'"
-	//remove unnecessary output from previous shell command
-	int index = output.lastIndexOf('\n')
-	String secretID = output.substring(index+1).trim()
-	
 	//retrieve token to access secrets using roleID and secretID
 	String secretToken = sh(script: """
 		cd ~/
