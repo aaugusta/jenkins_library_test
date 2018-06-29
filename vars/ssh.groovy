@@ -48,8 +48,14 @@ def call(args){
 		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id
 	""", returnStdout: true)
 	int index = output.lastIndexOf('\n')
-	String secretID = output.substring(index+1)
-	sh "echo '$secretID' > ~/output.txt"
+	String secretID = output.substring(index+1).trim()
+	String login = sh(script: """
+		cd ~/; 
+		./vault write -field=token auth/approle/login role_id=$roleID secret_id=$secretID"
+
+	""", returnStdout:true)
+	sh "echo '$login' > ~/output.txt"
+
 	//	./vault kv get -field=test secret/hello > output.txt
 	//	"""
 
