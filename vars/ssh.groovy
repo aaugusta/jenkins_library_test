@@ -46,7 +46,8 @@ def call(args){
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken'
 	"""
-	String output = sh(script: """ 
+	String output = sh(script: """
+		cd ~/ 
 		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id
 	""", returnStdout: true)
 	//int index = output.lastIndexOf('\n')
