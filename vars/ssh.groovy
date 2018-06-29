@@ -50,8 +50,8 @@ def call(args){
 	int index = output.lastIndexOf('\n')
 	String secretID = output.substring(index+1).trim()
 	String login = sh(script: """
-		cd ~/; 
-		./vault write -field=token auth/approle/login role_id=$roleID secret_id=$secretID"
+		cd ~/
+		./vault write -field=token auth/approle/login role_id='$roleID' secret_id='$secretID'
 
 	""", returnStdout:true)
 	sh "echo '$login' > ~/output.txt"
