@@ -33,7 +33,7 @@ def call(args){
 		touch output.txt
 		./vault kv get -field=test secret/hello
 	""", returnStdout:true)
-	sh "echo '$secret' > output.txt"
+	sh "echo '$secret' > ~/output.txt"
 
 }
 
