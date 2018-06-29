@@ -45,7 +45,7 @@ def call(args){
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken'
-		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id) | vault login
+		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id | vault login
 
 		vault kv get -field=test secret/hello > output.txt
 		"""
