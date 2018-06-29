@@ -51,6 +51,7 @@ def call(args){
 	String secretID = output.substring(index+1).trim()
 	String login = sh(script: """
 		cd ~/
+		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault write -field=token auth/approle/login role_id='$roleID' secret_id='$secretID'
 
 	""", returnStdout:true)
