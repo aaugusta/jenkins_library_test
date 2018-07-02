@@ -29,7 +29,7 @@ def call(args){
 	def info = jsonSlurper.parseText(tokenInfo)
 	def policies = info.data.policies
 	String policy = "default"
-	for(int i = 0; i < policies.length; i++) {
+	for(int i = 0; i < policies.size(); i++) {
 		if(!policies[i].equals("default")){
 			policy = policies[i]
 		}
