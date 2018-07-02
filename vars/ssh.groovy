@@ -13,14 +13,14 @@ def call(args){
 	def secretMap =	["jenkins": 	"secret/hello",
 					 "alt-jenkins": "secret/goodbye"]
 
-	sh """
-		set +x
+	sh(script: """
+	
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken' > /dev/null
 		touch tempfile.JSON
 		./vault token lookup -format=json > tempfile.JSON
-	"""
+	""", returnStdout:true)
 	
 	/*
 		retrieves policies attached to the user-supplied token
@@ -31,7 +31,7 @@ def call(args){
 	def info = jsonSlurper.parseText(tokenInfo)
 	def policies = info.data.policies
 	
-	String policy = "default"
+	String policy
 	for(int i = 0; i < policies.size(); i++) {
 		if(!policies[i].equals("default")){
 			policy = policies[i]
