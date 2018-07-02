@@ -6,7 +6,7 @@ def call(args){
 
 	String roleID = "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"
 	String vaultToken = args
-	
+	def roleMap = ["jenkins": "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"]
 
 	//get secret ID
 	String secretID = sh(script: """ 
@@ -19,10 +19,14 @@ def call(args){
 		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id
 	""", returnStdout: true)
 	
+	/*
+		retrieves policies attached to the user-supplied token
+		these policies will tell us what Role ID the user should be associated with
+	*/
 	def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
 	def jsonSlurper = new JsonSlurper()
 	def info = jsonSlurper.parseText(tokenInfo)
-	println info.data.policies
+	println info.data.policies[1]
 	//retrieve token to access secrets using roleID and secretID
 	String secretToken = sh(script: """
 		set +x
@@ -41,6 +45,9 @@ def call(args){
 	""", returnStdout:true)
 
 	sh(script: "set +x; echo '$secret' > ~/output.txt", returnStdout: true)
+
+
+
 
 }
 
