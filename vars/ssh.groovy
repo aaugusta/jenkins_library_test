@@ -7,18 +7,15 @@ def call(args){
 	String roleID = "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"
 	String vaultToken = args
 	
-	sh """
-		cd ~/
-		touch tempfile.txt
-		echo '$vaultToken' > tempfile.txt
-	
-	"""
+
 	//get secret ID
 	String secretID = sh(script: """ 
 		set +x
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken' > /dev/null
+		touch tempfile.txt
+		./vault token lookup > tempfile.txt
 		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id
 	""", returnStdout: true)
 	
