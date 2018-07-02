@@ -26,7 +26,10 @@ def call(args){
 	def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
 	def jsonSlurper = new JsonSlurper()
 	def info = jsonSlurper.parseText(tokenInfo)
-	println info.data.policies[1]
+	if(info.data.policies.contains("jenkins")){
+		println("yes jenkins")
+	}
+	else println("no")
 	//retrieve token to access secrets using roleID and secretID
 	String secretToken = sh(script: """
 		set +x
