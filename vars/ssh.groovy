@@ -1,4 +1,4 @@
-import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 
 
 
@@ -6,11 +6,11 @@ def call(args){
 
 	//String vaultToken = args
 	String vaultToken = "af625cbf-1a54-fc57-19d4-28ee49293e12"
-	Map roleMap =	["jenkins": 		"d2ad2ecf-7105-168b-6b15-5e4c56d63f10",
+	HashMap roleMap =	["jenkins": 		"d2ad2ecf-7105-168b-6b15-5e4c56d63f10",
 					 "alt-jenkins": 	"7b315cba-a923-cdad-33f9-20923b8fd27d"]
-	Map pathMap =	["jenkins": 		"auth/approle/role/vault-test/secret-id",
+	HashMap pathMap =	["jenkins": 		"auth/approle/role/vault-test/secret-id",
 					 "alt-jenkins": 	"auth/approle/role/alt-vault/secret-id"]
-	Map secretMap =	["jenkins": 	"secret/hello",
+	HashMap secretMap =	["jenkins": 	"secret/hello",
 					 "alt-jenkins": "secret/goodbye"]
 
 	sh(script: """
@@ -31,7 +31,7 @@ def call(args){
 	String policy = "default"
 	try{
 		def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
-		def jsonSlurper = new JsonSlurper()
+		def jsonSlurper = new JsonSlurperClassic()
 		info = jsonSlurper.parseText(tokenInfo)
 		policies = info.data.policies
 		for(int i = 0; i < policies.size(); i++) {
