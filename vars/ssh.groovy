@@ -6,13 +6,15 @@ def call(args){
 
 	//String vaultToken = args
 	String vaultToken = "af625cbf-1a54-fc57-19d4-28ee49293e12"
-	def roleMap = 	[ 	
-						"[default, jenkins]": "d2ad2ecf-7105-168b-6b15-5e4c56d63f10",
-						"[alt-jenkins, default]": "7b315cba-a923-cdad-33f9-20923b8fd27d"
-					]
+	def roleMap = [	"jenkins": "d2ad2ecf-7105-168b-6b15-5e4c56d63f10",
+					"alt-jenkins": "7b315cba-a923-cdad-33f9-20923b8fd27d"]
+	def pathMap = [	"jenkins": "auth/approle/role/vault-test/secret-id",
+					"alt-jenkins": "auth/approle/role/alt-vault/secret-id"]
+	def secretMap = [	"jenkins": "secret/hello"
+						"alt-jenkins": "secret/goodbye"]
 
 	sh """
-		set +x
+		
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken' > /dev/null
@@ -28,6 +30,7 @@ def call(args){
 	def jsonSlurper = new JsonSlurper()
 	def info = jsonSlurper.parseText(tokenInfo)
 	def policies = info.data.policies
+	
 	String policy = "default"
 	for(int i = 0; i < policies.size(); i++) {
 		if(!policies[i].equals("default")){
@@ -35,8 +38,11 @@ def call(args){
 		}
 	}
 	println policy
-	String roleID = roleMap.get(info.data.policies.toString())
+	String roleID = roleMap.get(policy)
+	String path = pathMap.get(policy)
+	String secret = secretMap.get(policy)
 	println roleID
+
 
 
 
@@ -44,7 +50,7 @@ def call(args){
 	String secretID = sh(script: """ 
 		set +x
 		cd ~/	
-		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id
+		./vault write -field=secret_id -f '$path'
 	""", returnStdout: true)
 	
 	
@@ -57,25 +63,21 @@ def call(args){
 		./vault write -field=token auth/approle/login role_id='$roleID' secret_id='$secretID'
 	""", returnStdout:true)
 	
-	def secret1 = sh(script: """
+	def secret = sh(script: """
 		set +x
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login $secretToken > /dev/null
-		touch output.txt
-		./vault kv get -field=test secret/hello
+		
+		./vault kv get -field=test '$secret'
 	""", returnStdout:true)
 
-	def secret2 = sh(script: """
+	sh(script: """
 		set +x
-		cd ~/
-		export VAULT_ADDR='http://127.0.0.1:8200'
-		./vault login $secretToken > /dev/null
-		touch output.txt
-		./vault kv get -field=test secret/goodbye
-	""", returnStdout:true)
-
-	sh(script: "set +x; echo '$secret' > ~/output.txt", returnStdout: true)
+		touch ~/output.txt
+		echo '$secret1' >> ~/output.txt
+		echo '$secret2' >> ~/output.txt
+	 """, returnStdout: true)
 
 
 
