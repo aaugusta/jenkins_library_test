@@ -31,21 +31,21 @@ def call(args){
 		def jsonSlurper = new JsonSlurper()
 		def info = jsonSlurper.parseText(tokenInfo)
 		def policies = info.data.policies
-		
-		String policy
-		for(int i = 0; i < policies.size(); i++) {
-			if(!policies[i].equals("default")){
-				policy = policies[i]
-			}
-		}
-		println policy
-		String roleID = roleMap.get(policy)
-		String secretIDPath = pathMap.get(policy)
-		String secretDest = secretMap.get(policy)
-		println roleID
 	} catch(Exception e){
 		println(e.message())
 	}
+	String policy = "default"
+	for(int i = 0; i < policies.size(); i++) {
+		if(!policies[i].equals("default")){
+			policy = policies[i]
+		}
+	}
+	println policy
+	String roleID = roleMap.get(policy)
+	String secretIDPath = pathMap.get(policy)
+	String secretDest = secretMap.get(policy)
+	println roleID
+
 
 
 
