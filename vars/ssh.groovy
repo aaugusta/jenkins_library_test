@@ -8,7 +8,7 @@ def call(args){
 	String vaultToken = "af625cbf-1a54-fc57-19d4-28ee49293e12"
 	def roleMap = 	[ 	
 						"[default, jenkins]": "d2ad2ecf-7105-168b-6b15-5e4c56d63f10",
-						"[default, alt-jenkins]": "7b315cba-a923-cdad-33f9-20923b8fd27d"
+						"[alt-jenkins, default]": "7b315cba-a923-cdad-33f9-20923b8fd27d"
 					]
 
 	sh """
@@ -28,7 +28,7 @@ def call(args){
 	def jsonSlurper = new JsonSlurper()
 	def info = jsonSlurper.parseText(tokenInfo)
 	def policies = info.data.policies
-	println policies
+	println policies[0]
 	String roleID = roleMap.get(info.data.policies.toString())
 	println roleID
 
