@@ -7,6 +7,11 @@ def call(args){
 	String roleID = "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"
 	String vaultToken = args
 	
+	sh """
+		cd ~/
+		export VAULT_ADDR='http://127.0.0.1:8200'
+		./vault token lookup $vaultToken
+	"""
 	//get secret ID
 	String secretID = sh(script: """ 
 		set +x
