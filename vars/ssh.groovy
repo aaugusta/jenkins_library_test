@@ -45,7 +45,7 @@ def call(args){
 
 	String roleID = roleMap.get(policy)
 	String secretIDPath = pathMap.get(policy)
-	String secretDest = secretMap.get("jenkins")
+	String secretDest = secretMap.get(policy)
 
 
 	//get secret ID
