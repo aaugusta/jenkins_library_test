@@ -28,7 +28,13 @@ def call(args){
 	def jsonSlurper = new JsonSlurper()
 	def info = jsonSlurper.parseText(tokenInfo)
 	def policies = info.data.policies
-	println policies[0]
+	String policy = "default"
+	for(int i = 0; i < policies.length; i++) {
+		if(!policies[i].equals("default")){
+			policy = policies[i]
+		}
+	}
+	println policy
 	String roleID = roleMap.get(info.data.policies.toString())
 	println roleID
 
