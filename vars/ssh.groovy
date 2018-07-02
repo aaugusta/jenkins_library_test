@@ -19,7 +19,7 @@ def call(args){
 		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id
 	""", returnStdout: true)
 	
-	def tokenInfo = sh(script: "cat ~/tempfile.txt", returnStdout: true)
+	def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
 	def jsonSlurper = new JsonSlurper()
 	def data = jsonSlurper.parseText(new File("~/tempfile.JSON").text)
 	println data.policies
