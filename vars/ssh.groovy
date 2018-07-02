@@ -4,9 +4,8 @@ import groovy.json.*
 
 def call(args){
 
-	String roleID = "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"
 	String vaultToken = args
-	def roleMap = ["jenkins": "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"]
+	def roleMap = ["[default, jenkins]": "d2ad2ecf-7105-168b-6b15-5e4c56d63f10"]
 
 	//get secret ID
 	String secretID = sh(script: """ 
@@ -26,10 +25,8 @@ def call(args){
 	def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
 	def jsonSlurper = new JsonSlurper()
 	def info = jsonSlurper.parseText(tokenInfo)
-	if(info.data.policies.contains("jenkins")){
-		println("yes jenkins")
-	}
-	else println("no")
+	String roleID = roleMap.get(info.data.policies)
+	println roleID
 	//retrieve token to access secrets using roleID and secretID
 	String secretToken = sh(script: """
 		set +x
