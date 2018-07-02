@@ -11,9 +11,7 @@ def call(args){
 		cd ~/
 		touch tempfile.txt
 		echo '$vaultToken' > tempfile.txt
-		cat tempfile.txt 
-		export VAULT_ADDR='http://127.0.0.1:8200'
-		./vault token lookup '$vaultToken'
+	
 	"""
 	//get secret ID
 	String secretID = sh(script: """ 
