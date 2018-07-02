@@ -26,23 +26,26 @@ def call(args){
 		retrieves policies attached to the user-supplied token
 		these policies will tell us what Role ID the user should be associated with
 	*/
-	def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
-	def jsonSlurper = new JsonSlurper()
-	def info = jsonSlurper.parseText(tokenInfo)
-	def policies = info.data.policies
-	
-	String policy
-	for(int i = 0; i < policies.size(); i++) {
-		if(!policies[i].equals("default")){
-			policy = policies[i]
+	try{
+		def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
+		def jsonSlurper = new JsonSlurper()
+		def info = jsonSlurper.parseText(tokenInfo)
+		def policies = info.data.policies
+		
+		String policy
+		for(int i = 0; i < policies.size(); i++) {
+			if(!policies[i].equals("default")){
+				policy = policies[i]
+			}
 		}
+		println policy
+		String roleID = roleMap.get(policy)
+		String path = pathMap.get(policy)
+		String secretDest = secretMap.get(policy)
+		println roleID
+	} catch(Exception e){
+		println(e.message())
 	}
-	println policy
-	String roleID = roleMap.get(policy)
-	String path = pathMap.get(policy)
-	String secretDest = secretMap.get(policy)
-	println roleID
-
 
 
 
