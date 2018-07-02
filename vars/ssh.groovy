@@ -40,7 +40,7 @@ def call(args){
 	println policy
 	String roleID = roleMap.get(policy)
 	String path = pathMap.get(policy)
-	String secret = secretMap.get(policy)
+	String secretDest = secretMap.get(policy)
 	println roleID
 
 
@@ -69,14 +69,13 @@ def call(args){
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login $secretToken > /dev/null
 		
-		./vault kv get -field=test '$secret'
+		./vault kv get -field=test '$secretDest'
 	""", returnStdout:true)
 
 	sh(script: """
 		set +x
 		touch ~/output.txt
-		echo '$secret1' >> ~/output.txt
-		echo '$secret2' >> ~/output.txt
+		echo '$secret' >> ~/output.txt
 	 """, returnStdout: true)
 
 
