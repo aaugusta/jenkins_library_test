@@ -14,7 +14,7 @@ def call(args){
 						"alt-jenkins": "secret/goodbye"]
 
 	sh """
-		
+		set +x
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken' > /dev/null
