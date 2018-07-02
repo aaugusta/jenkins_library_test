@@ -1,4 +1,4 @@
-
+import groovy.json.*
 
 
 
@@ -14,11 +14,15 @@ def call(args){
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken' > /dev/null
-		touch tempfile.txt
-		./vault token lookup > tempfile.txt
+		touch tempfile.JSON
+		./vault token lookup > tempfile.JSON
 		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id
 	""", returnStdout: true)
 	
+	def tokenInfo = sh(script: "cat ~/tempfile.txt", returnStdout: true)
+	def jsonSlurper = new JsonSlurper()
+	def data = jsonSlurper.parseText(new File("~/tempfile.JSON").text)
+	println data.policies
 	//retrieve token to access secrets using roleID and secretID
 	String secretToken = sh(script: """
 		set +x
