@@ -10,13 +10,12 @@ def call(args){
 
 	//get secret ID
 	String secretID = sh(script: """ 
-		
+		set +x
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken' > /dev/null
 		touch tempfile.JSON
-		./vault token lookup > tempfile.JSON
-		cat tempfile.JSON
+		./vault token lookup -format=json > tempfile.JSON
 		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id
 	""", returnStdout: true)
 	
