@@ -50,6 +50,7 @@ def call(args){
 	String secretID = sh(script: """ 
 		set +x
 		cd ~/	
+		./vault login '$vaultToken' > /dev/null
 		./vault write -field=secret_id -f '$path'
 	""", returnStdout: true)
 	
@@ -69,7 +70,7 @@ def call(args){
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login $secretToken > /dev/null
 		
-		./vault kv get -field=test '$secretDest'
+		./vault kv get -field=test '$secretDest
 	""", returnStdout:true)
 
 	sh(script: """
