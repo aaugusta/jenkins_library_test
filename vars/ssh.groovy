@@ -14,7 +14,7 @@ def call(args){
 					 "alt-jenkins": "secret/goodbye"]
 
 	sh(script: """
-	
+		set +x
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken' > /dev/null
@@ -52,7 +52,8 @@ def call(args){
 	//get secret ID
 	String secretID = sh(script: """ 
 		set +x
-		cd ~/	
+		cd ~/
+		export VAULT_ADDR='http://127.0.0.1:8200'	
 		./vault login '$vaultToken' > /dev/null
 		./vault write -field=secret_id -f '$path'
 	""", returnStdout: true)
