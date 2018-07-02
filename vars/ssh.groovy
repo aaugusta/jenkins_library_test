@@ -5,13 +5,14 @@ import groovy.json.JsonSlurperClassic
 def call(args){
 
 	String vaultToken = args
-	HashMap roleMap =	["jenkins": 		"d2ad2ecf-7105-168b-6b15-5e4c56d63f10",
-					 "alt-jenkins": 	"7b315cba-a923-cdad-33f9-20923b8fd27d"]
-	HashMap pathMap =	["jenkins": 		"auth/approle/role/vault-test/secret-id",
-					 "alt-jenkins": 	"auth/approle/role/alt-vault/secret-id"]
-	HashMap secretMap =	["jenkins": 	"secret/hello",
+	HashMap roleMap =	["jenkins": "d2ad2ecf-7105-168b-6b15-5e4c56d63f10",
+					 "alt-jenkins": "7b315cba-a923-cdad-33f9-20923b8fd27d"]
+	HashMap pathMap =	["jenkins": "auth/approle/role/vault-test/secret-id",
+					 "alt-jenkins": "auth/approle/role/alt-vault/secret-id"]
+	HashMap secretMap =	["jenkins": "secret/hello",
 					 "alt-jenkins": "secret/goodbye"]
 
+	//login using user-provided token
 	sh(script: """
 		set +x
 		cd ~/
@@ -42,15 +43,9 @@ def call(args){
 		println(e.message())
 	}
 
-	
-	
-	println policy
 	String roleID = roleMap.get(policy)
 	String secretIDPath = pathMap.get(policy)
 	String secretDest = secretMap.get(policy)
-	println roleID
-
-
 
 
 	//get secret ID
@@ -83,7 +78,7 @@ def call(args){
 	sh(script: """
 		set +x
 		touch ~/output.txt
-		echo '$secret' >> ~/output.txt
+		echo '$secret' > ~/output.txt
 	 """, returnStdout: true)
 
 
