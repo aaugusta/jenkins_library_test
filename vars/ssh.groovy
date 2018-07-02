@@ -10,18 +10,19 @@ def call(args){
 
 	//get secret ID
 	String secretID = sh(script: """ 
-		set +x
+		
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login '$vaultToken' > /dev/null
 		touch tempfile.JSON
 		./vault token lookup > tempfile.JSON
+		cat tempfile.JSON
 		./vault write -field=secret_id -f auth/approle/role/vault-test/secret-id
 	""", returnStdout: true)
 	
 	def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
 	def jsonSlurper = new JsonSlurper()
-	def data = jsonSlurper.parseText(new File("~/tempfile.JSON").text)
+	def data = jsonSlurper.parseText(tokenInfo)
 	println data.policies
 	//retrieve token to access secrets using roleID and secretID
 	String secretToken = sh(script: """
