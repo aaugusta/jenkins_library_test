@@ -6,12 +6,12 @@ def call(args){
 
 	//String vaultToken = args
 	String vaultToken = "af625cbf-1a54-fc57-19d4-28ee49293e12"
-	def roleMap = [	"jenkins": "d2ad2ecf-7105-168b-6b15-5e4c56d63f10",
-					"alt-jenkins": "7b315cba-a923-cdad-33f9-20923b8fd27d"]
-	def pathMap = [	"jenkins": "auth/approle/role/vault-test/secret-id",
-					"alt-jenkins": "auth/approle/role/alt-vault/secret-id"]
-	def secretMap = [	"jenkins": "secret/hello"
-						"alt-jenkins": "secret/goodbye"]
+	def roleMap =	["jenkins": 		"d2ad2ecf-7105-168b-6b15-5e4c56d63f10",
+					 "alt-jenkins": 	"7b315cba-a923-cdad-33f9-20923b8fd27d"]
+	def pathMap =	["jenkins": 		"auth/approle/role/vault-test/secret-id",
+					 "alt-jenkins": 	"auth/approle/role/alt-vault/secret-id"]
+	def secretMap =	["jenkins": 	"secret/hello",
+					 "alt-jenkins": "secret/goodbye"]
 
 	sh """
 		set +x
