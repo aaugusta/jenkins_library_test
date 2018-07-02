@@ -29,19 +29,17 @@ def call(args){
 	def info
 	def policies
 	String policy = "default"
-	try{
-		def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
-		def jsonSlurper = new JsonSlurperClassic()
-		info = jsonSlurper.parseText(tokenInfo)
-		policies = info.data.policies
-		for(int i = 0; i < policies.size(); i++) {
-			if(!policies[i].equals("default")){
-				policy = policies[i]
-			}	
-		}
-	} catch(Exception e){
-		println(e.message())
+
+	def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
+	def jsonSlurper = new JsonSlurperClassic()
+	info = jsonSlurper.parseText(tokenInfo)
+	policies = info.data.policies
+	for(int i = 0; i < policies.size(); i++) {
+		if(!policies[i].equals("default")){
+			policy = policies[i]
+		}	
 	}
+
 	
 	
 	println policy
@@ -77,8 +75,7 @@ def call(args){
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'
 		./vault login $secretToken > /dev/null
-		
-		./vault kv get -field=test '$secretDest
+		./vault kv get -field=test '$secretDest'
 	""", returnStdout:true)
 
 	sh(script: """
