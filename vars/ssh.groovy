@@ -4,8 +4,7 @@ import groovy.json.JsonSlurperClassic
 
 def call(args){
 
-	//String vaultToken = args
-	String vaultToken = "af625cbf-1a54-fc57-19d4-28ee49293e12"
+	String vaultToken = args
 	HashMap roleMap =	["jenkins": 		"d2ad2ecf-7105-168b-6b15-5e4c56d63f10",
 					 "alt-jenkins": 	"7b315cba-a923-cdad-33f9-20923b8fd27d"]
 	HashMap pathMap =	["jenkins": 		"auth/approle/role/vault-test/secret-id",
