@@ -21,8 +21,8 @@ def call(args){
 	
 	def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
 	def jsonSlurper = new JsonSlurper()
-	def data = jsonSlurper.parseText(tokenInfo)
-	println data.policies
+	def info = jsonSlurper.parseText(tokenInfo)
+	println info.data.policies
 	//retrieve token to access secrets using roleID and secretID
 	String secretToken = sh(script: """
 		set +x
