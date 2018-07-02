@@ -28,21 +28,22 @@ def call(args){
 	*/
 	def info
 	def policies
+	String policy = "default"
 	try{
 		def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
 		def jsonSlurper = new JsonSlurper()
 		info = jsonSlurper.parseText(tokenInfo)
 		policies = info.data.policies
+		for(int i = 0; i < policies.size(); i++) {
+			if(!policies[i].equals("default")){
+				policy = policies[i]
+			}	
+		}
 	} catch(Exception e){
 		println(e.message())
 	}
 	
-	String policy = "default"
-	for(int i = 0; i < policies.size(); i++) {
-		if(!policies[i].equals("default")){
-			policy = policies[i]
-		}
-	}
+	
 	println policy
 	String roleID = roleMap.get(policy)
 	String secretIDPath = pathMap.get(policy)
