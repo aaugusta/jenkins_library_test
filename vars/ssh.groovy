@@ -29,15 +29,18 @@ def call(args){
 	def info
 	def policies
 	String policy = "default"
-
-	def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
-	def jsonSlurper = new JsonSlurperClassic()
-	info = jsonSlurper.parseText(tokenInfo)
-	policies = info.data.policies
-	for(int i = 0; i < policies.size(); i++) {
-		if(!policies[i].equals("default")){
-			policy = policies[i]
-		}	
+	try{
+		def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
+		def jsonSlurper = new JsonSlurperClassic()
+		info = jsonSlurper.parseText(tokenInfo)
+		policies = info.data.policies
+		for(int i = 0; i < policies.size(); i++) {
+			if(!policies[i].equals("default")){
+				policy = policies[i]
+			}	
+		}
+	} catch(Exception e){
+		println(e.message())
 	}
 
 	
