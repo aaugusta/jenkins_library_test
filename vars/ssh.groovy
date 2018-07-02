@@ -27,14 +27,16 @@ def call(args){
 		these policies will tell us what Role ID the user should be associated with
 	*/
 	def info
+	def policies
 	try{
 		def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
 		def jsonSlurper = new JsonSlurper()
 		info = jsonSlurper.parseText(tokenInfo)
+		policies = info.data.policies
 	} catch(Exception e){
 		println(e.message())
 	}
-	def policies = info.data.policies
+	
 	String policy = "default"
 	for(int i = 0; i < policies.size(); i++) {
 		if(!policies[i].equals("default")){
