@@ -26,7 +26,7 @@ def call(args){
 		retrieves policies attached to the user-supplied token
 		these policies will tell us what Role ID the user should be associated with
 	*/
-	try{
+	
 		def tokenInfo = sh(script: "cat ~/tempfile.JSON", returnStdout: true)
 		def jsonSlurper = new JsonSlurper()
 		def info = jsonSlurper.parseText(tokenInfo)
@@ -40,12 +40,10 @@ def call(args){
 		}
 		println policy
 		String roleID = roleMap.get(policy)
-		String path = pathMap.get(policy)
+		String secretIDPath = pathMap.get(policy)
 		String secretDest = secretMap.get(policy)
 		println roleID
-	} catch(Exception e){
-		println(e.message())
-	}
+
 
 
 
@@ -55,7 +53,7 @@ def call(args){
 		cd ~/
 		export VAULT_ADDR='http://127.0.0.1:8200'	
 		./vault login '$vaultToken' > /dev/null
-		./vault write -field=secret_id -f '$path'
+		./vault write -field=secret_id -f '$secretIDPath'
 	""", returnStdout: true)
 	
 	
