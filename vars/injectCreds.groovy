@@ -7,20 +7,19 @@ def call(init_token){
 
 
 	String secretID = sh(script: """
-		set +x
 		export VAULT_ADDR=$vault_addr
 		vault login $vaultToken > /dev/null
 		vault write -field=secret_id -f 'auth/role/jenkins-azure/secret_id' 
 	""", returnStdout: true)
 
 	String secretToken = sh(script: """
-		set +x
+
 		export VAULT_ADDR=$vault_addr
 		vault write -field=token auth/approle/login role_id=$roleID secret_id=$secretID
 	""", returnStdout: true)
 
 	String output = sh(script: """
-		set +x
+	
 		export VAULT_ADDR=$vault_addr
 		vault login $secretToken > /dev/null
 		vault kv get -field=id my-secret/data/subID
