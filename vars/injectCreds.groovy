@@ -29,5 +29,8 @@ def call(init_token){
 		vault kv get -field=id my-secret/data/tenantID  
 	""", returnStdout: true)
 
-	sh "echo $output"
+	sh """
+		export VAULT_ADDR=$vault_addr
+		echo $output
+	"""
 }
