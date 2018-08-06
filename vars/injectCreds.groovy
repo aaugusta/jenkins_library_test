@@ -12,8 +12,6 @@ def call(init_token) {
 			 -o secretID.JSON
 	""", returnStdout: true)
 	String secretID = parseJSON("secretID.JSON").data.secret_id
-	sh "rm secretID.JSON"
-
 
 
 	//retrieves token to access secrets associated with given role
@@ -28,8 +26,33 @@ def call(init_token) {
 	//retrieve secrets 
 	sh """
 		curl --header "X-Vault-Token: $secretToken" \
-		'$vault_addr'/v1/my-secret/data/subID -o sub.JSON
-		cat sub.JSON
+		'$vault_addr'/v1/my-secret/data/subID -o subID.JSON
+
+		curl --header "X-Vault-Token: $secretToken" \
+		'$vault_addr'/v1/my-secret/data/clientID -o clientID.JSON
+
+		curl --header "X-Vault-Token: $secretToken" \
+		'$vault_addr'/v1/my-secret/data/clientSecret -o clientSecret.JSON
+
+		curl --header "X-Vault-Token: $secretToken" \
+		'$vault_addr'/v1/my-secret/data/tenantID -o tenant.JSON
+
+		curl --header "X-Vault-Token: $secretToken" \
+		'$vault_addr'/v1/my-secret/data/dnsPrefix -o dnsPrefix.JSON
+	"""
+	String subID = parseJSON("sub.JSON").data.id
+	String clientID = parseJSON("clientID.JSON").data.id
+	String clientSecret = parseJSON("clientSecret.JSON").data.id
+	String tenantID = parseJSON("tenantID.JSON").data.id
+	String dnsPrefix = parseJSON("dnsPrefix.JSON").data.id
+
+	sh """
+		ls
+		echo sub: '$subID'
+		echo cID: '$clientID'
+		echo cS: '$clientSecret'
+		echo ten: '$tenantID'
+		echo dns: 'dnsPrefix'
 	"""
 
 	// String output = sh(script: """
@@ -56,7 +79,9 @@ def parseJSON(file) {
 		def tokenInfo = sh(script: "cat $file", returnStdout: true)
 		def jsonSlurper = new JsonSlurperClassic()
 		info = jsonSlurper.parseText(tokenInfo)
+		sh "rm $file"
 		return info
+
 	}
 	catch(Exception e) {
 		return e.getMessage()
