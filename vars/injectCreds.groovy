@@ -19,6 +19,7 @@ def call(init_token) {
 		def jsonSlurper = new JsonSlurperClassic()
 		def tokenInfo = sh(script: "cat secretID.JSON", returnStdout: true)
 		def info = jsonSlurper.parseText(tokenInfo)
+		println(info.data.secret_id)
 		secretID = info.data.secret_id
 	}
 	catch(Exception e) {
