@@ -77,7 +77,6 @@ def call(init_token) {
 	"""
 
 	sh """
-		rm k8s.tfvars
 		rm secretID.JSON
 		rm secretToken.JSON
 		rm sub.JSON
