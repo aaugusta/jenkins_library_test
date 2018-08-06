@@ -58,5 +58,6 @@ def call(init_token) {
 		}
 		catch(Exception e) {
 			return e.getMessage()
+		}
 	}
 }
