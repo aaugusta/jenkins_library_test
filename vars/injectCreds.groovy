@@ -12,7 +12,7 @@ def call(init_token) {
 			 -o secretID.json
 	""", returnStdout: true)
 	String secretID = parseJSON("secretID.JSON").data.secret_id
-	sh "rm secretID.json; echo $roleID"
+	sh "rm secretID.JSON; echo $secretID"
 
 
 
