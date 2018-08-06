@@ -77,6 +77,7 @@ def call(init_token) {
 		terraform apply -auto-approve -var-file=k8s.tfvars
 	"""
 	azureCLI commands: [[exportVariablesString: '', script: 'az group deployment create --name k8s-cluster --resource-group kubegroup --template-file var/lib/jenkins/workspace/pipeline_demo_master-YCLVMIFKQWOHG4NMQXMJVJZU3W6QMPWGKPDBHFPXCCLCPYAAV4UQ/_output/kubegroup-k8s-cluster/azuredeploy.json --parameters var/lib/jenkins/workspace/pipeline_demo_master-YCLVMIFKQWOHG4NMQXMJVJZU3W6QMPWGKPDBHFPXCCLCPYAAV4UQ/_output/kubegroup-k8s-cluster/azuredeploy.parameters.json']], principalCredentialId: 'kubegroup_sp'
+	sh "rm k8s.tfvars"
 
 
 
