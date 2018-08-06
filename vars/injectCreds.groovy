@@ -7,36 +7,31 @@ def call(init_token) {
 
 
 	sh(script: """
-		export VAULT_ADDR=$vault_addr
 		curl --header "X-Vault-Token: $vaultToken" \
 			 --request POST '$vault_addr'/v1/auth/approle/role/jenkins-azure/secret-id \
 			 -o secretID.json
-		cat secretID.JSON
 	""")
 
 	def info
-	String secretID
-	try {
-		def tokenInfo = sh(script: "cat secretID.JSON", returnStdout: true)
-		def jsonSlurper = new JsonSlurperClassic()	
-		info = jsonSlurper.parseText(tokenInfo)
-		secretID = info.data.secret_id
-	}
-	catch(Exception e) {
-		sh 'echo dang it failed'
-		println(e.getMessage())
-	}
+	String secretID = parseJSON("secretID.JSON").data.secret_id
+	sh 'cat '
+	// try {
+	// 	def tokenInfo = sh(script: "cat secretID.JSON", returnStdout: true)
+	// 	def jsonSlurper = new JsonSlurperClassic()	
+	// 	info = jsonSlurper.parseText(tokenInfo)
+	// 	secretID = info.data.secret_id
+	// }
+	// catch(Exception e) {
+	// 	println(e.getMessage())
+	// }
 
-	sh """
-		echo $secretID
-		echo '$secretID'
-		echo hello
-	"""
-	// String secretToken = sh(script: """
 
-	// 	export VAULT_ADDR=$vault_addr
-	// 	vault write -field=token auth/approle/login role_id=$roleID secret_id=$secretID
-	// """, returnStdout: true)
+	String payload = '{"role_id": "$roleID", "secret_id": "$secretID"}'
+
+	sh(script: """
+		curl --request POST --data $payload '$vault_addr'/v1/auth/approle/login \
+		-o secretToken.JSON
+	""")
 
 	// String output = sh(script: """
 	
@@ -52,4 +47,16 @@ def call(init_token) {
 	// 	export VAULT_ADDR=$vault_addr
 	// 	echo $output
 	// """
+}
+
+def parseJSON(file){
+	try{
+		def tokenInfo = sh(script: "cat $file", returnStdout: true)
+		def jsonSlurper = new JsonSlurperClassic()
+		info = jsonSlurper.parseText(tokenInfo)
+		return info
+	}
+	catch(Exception e) {
+		return e.getMessage()
+	}
 }
