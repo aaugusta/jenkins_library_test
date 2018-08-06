@@ -2,7 +2,7 @@ import groovy.json.JsonSlurperClassic
 
 def call(init_token) {
 	String vaultToken = init_token
-	String roleID = "20c5906d-6106-696e-9288-7e274df11f13"
+	String roleID = '20c5906d-6106-696e-9288-7e274df11f13'
 	String vault_addr = 'http://127.0.0.1:8200'
 
 	//retrieves secret_id for approle authentication
@@ -12,7 +12,7 @@ def call(init_token) {
 			 -o secretID.json
 	""", returnStdout: true)
 	String secretID = parseJSON("secretID.JSON").data.secret_id
-	sh "rm secretID.json"
+	sh "rm secretID.json; echo $roleID"
 
 
 
