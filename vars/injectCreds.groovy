@@ -28,7 +28,7 @@ def call(init_token) {
 	}
 
 	sh """
-		echo $secretID"
+		echo $secretID
 		echo '$secretID'
 		echo hello
 	"""
