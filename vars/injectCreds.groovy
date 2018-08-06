@@ -47,6 +47,14 @@ def call(init_token) {
 	String dnsPrefix = parseJSON("dnsPrefix.JSON").data.id
 
 	sh """
+		rm subID.JSON
+		rm clientID.JSON
+		rm clientSecret.JSON
+		rm tenantID.JSON
+		rm dnsPrefix.JSON
+	"""
+
+	sh """
 		ls
 		echo sub: '$subID'
 		echo cID: '$clientID'
@@ -79,7 +87,6 @@ def parseJSON(file) {
 		def tokenInfo = sh(script: "cat $file", returnStdout: true)
 		def jsonSlurper = new JsonSlurperClassic()
 		info = jsonSlurper.parseText(tokenInfo)
-		sh "rm $file"
 		return info
 
 	}
