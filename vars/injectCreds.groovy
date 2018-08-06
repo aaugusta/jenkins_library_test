@@ -15,16 +15,10 @@ def call(init_token) {
 	""")
 
 	def info
-	String secretID = ""
+	String secretID
 	try {
-		
-		sh 'cat secretID.JSON'
-		sh 'ls'
 		def tokenInfo = sh(script: "cat secretID.JSON", returnStdout: true)
-		def jsonSlurper = new JsonSlurperClassic()
-		sh 'echo print again?'
-		
-		
+		def jsonSlurper = new JsonSlurperClassic()	
 		info = jsonSlurper.parseText(tokenInfo)
 		secretID = info.data.secret_id
 	}
@@ -33,7 +27,11 @@ def call(init_token) {
 		println(e.getMessage())
 	}
 
-	sh "echo $secretID"
+	sh """
+		echo $secretID"
+		echo '$secretID'
+		echo hello
+	"""
 	// String secretToken = sh(script: """
 
 	// 	export VAULT_ADDR=$vault_addr
