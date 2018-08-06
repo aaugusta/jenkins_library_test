@@ -27,6 +27,7 @@ def call(init_token) {
 		secretID = info.data.secret_id
 	}
 	catch(Exception e) {
+		sh 'echo dang it failed'
 		println(e.getMessage())
 	}
 
