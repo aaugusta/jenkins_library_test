@@ -19,12 +19,12 @@ def call(init_token) {
 	sh(script: """
 		curl --request POST --data '$payload' '$vault_addr'/v1/auth/approle/login \
 		-o secretToken.JSON
-	""")
+	""", returnStdout: true)
 	String secretToken = parseJSON("secretToken.JSON").auth.client_token
 
 
 	//retrieve secrets 
-	sh """
+	sh(script: """
 		curl --header "X-Vault-Token: $secretToken" \
 		'$vault_addr'/v1/my-secret/data/subID -o subID.JSON
 
@@ -39,20 +39,20 @@ def call(init_token) {
 
 		curl --header "X-Vault-Token: $secretToken" \
 		'$vault_addr'/v1/my-secret/data/dnsPrefix -o dnsPrefix.JSON
-	"""
+	""", returnStdout: true)
 	String subID = parseJSON("subID.JSON").data.id
 	String clientID = parseJSON("clientID.JSON").data.id
 	String clientSecret = parseJSON("clientSecret.JSON").data.id
 	String tenantID = parseJSON("tenantID.JSON").data.id
 	String dnsPrefix = parseJSON("dnsPrefix.JSON").data.id
 
-	sh """
+	sh(script: """
 		rm subID.JSON
 		rm clientID.JSON
 		rm clientSecret.JSON
 		rm tenantID.JSON
 		rm dnsPrefix.JSON
-	"""
+	""", returnStdout: true)
 
 	sh """
 		ls
@@ -60,7 +60,7 @@ def call(init_token) {
 		echo cID: '$clientID'
 		echo cS: '$clientSecret'
 		echo ten: '$tenantID'
-		echo dns: 'dnsPrefix'
+		echo dns: '$dnsPrefix'
 	"""
 
 	// String output = sh(script: """
