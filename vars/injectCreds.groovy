@@ -7,9 +7,10 @@ def call(init_token) {
 
 	//retrieves secret_id for approle authentication
 	sh(script: """
+		rm secretID.json
 		curl --header "X-Vault-Token: $vaultToken" \
 			 --request POST '$vault_addr'/v1/auth/approle/role/jenkins-azure/secret-id \
-			 -o secretID.json
+			 -o secretID.JSON
 	""", returnStdout: true)
 	String secretID = parseJSON("secretID.JSON").data.secret_id
 	sh "rm secretID.JSON; echo $secretID"
