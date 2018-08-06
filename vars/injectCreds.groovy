@@ -49,15 +49,17 @@ def call(init_token) {
 	// """
 
 
-	def parseJSON(file) {
-		try{
-			def tokenInfo = sh(script: "cat $file", returnStdout: true)
-			def jsonSlurper = new JsonSlurperClassic()
-			info = jsonSlurper.parseText(tokenInfo)
-			return info
-		}
-		catch(Exception e) {
-			return e.getMessage()
-		}
+}
+
+
+def parseJSON(file) {
+	try{
+		def tokenInfo = sh(script: "cat $file", returnStdout: true)
+		def jsonSlurper = new JsonSlurperClassic()
+		info = jsonSlurper.parseText(tokenInfo)
+		return info
+	}
+	catch(Exception e) {
+		return e.getMessage()
 	}
 }
