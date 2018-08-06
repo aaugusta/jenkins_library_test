@@ -1,19 +1,31 @@
+import groovy.json.JsonSlurperClassic
 
-
-def call(init_token){
+def call(init_token) {
 	String vaultToken = init_token
 	String roleID = "20c5906d-6106-696e-9288-7e274df11f13"
 	String vault_addr = 'http://127.0.0.1:8200'
 
 
-	String secretID = sh(script: """
+	sh(script: """
 		export VAULT_ADDR=$vault_addr
 		curl --header "X-Vault-Token: $vaultToken" \
 			 --request POST '$vault_addr'/v1/auth/approle/role/jenkins-azure/secret-id \
-			 > secretID.json
-		cat secretID.json
-	""", returnStdout: true)
+			 > secretID.JSON
+		cat secretID.JSON
+	""")
 
+	String secretID = ""
+	try {
+		def jsonSlurper = new JsonSlurperClassic()
+		def tokenInfo = sh(script: "cat secretID.JSON", returnStdout: true)
+		def info = jsonSlurper.parseText(tokenInfo)
+		secretID = info.data.secret_id
+	}
+	catch(Exception e) {
+		println(e.message())
+	}
+
+	sh "echo $secretID"
 	String secretToken = sh(script: """
 
 		export VAULT_ADDR=$vault_addr
