@@ -23,7 +23,7 @@ def call(init_token) {
 		-o secretToken.JSON
 	""")
 	String secretToken = parseJSON("secretToken.JSON").client_token
-	sh "echo $secretToken"
+	sh "cat secretToken.json; echo $secretToken"
 
 	// String output = sh(script: """
 	
