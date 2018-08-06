@@ -18,7 +18,7 @@ def call(init_token) {
 
 	//retrieves token to access secrets associated with given role
 	
-	String payload = "{'role_id': '$roleID', 'secret_id': '$secretID'}"
+	String payload = /{"role_id": '$roleID', "secret_id": '$secretID'}/
 	sh(script: """
 		curl --request POST --data '$payload' '$vault_addr'/v1/auth/approle/login \
 		-o secretToken.JSON
