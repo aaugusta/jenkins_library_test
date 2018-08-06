@@ -79,11 +79,11 @@ def parseJSON(file) {
 		def tokenInfo = sh(script: "cat $file", returnStdout: true)
 		def jsonSlurper = new JsonSlurperClassic()
 		info = jsonSlurper.parseText(tokenInfo)
-		sh "rm $file"
+		sh "rm '$file'"
 		return info
 
 	}
 	catch(Exception e) {
-		return e.getMessage()
+		println(e.getMessage())
 	}
 }
