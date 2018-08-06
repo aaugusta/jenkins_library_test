@@ -35,7 +35,7 @@ def call(init_token) {
 		'$vault_addr'/v1/my-secret/data/clientSecret -o clientSecret.JSON
 
 		curl --header "X-Vault-Token: $secretToken" \
-		'$vault_addr'/v1/my-secret/data/tenantID -o tenant.JSON
+		'$vault_addr'/v1/my-secret/data/tenantID -o tenantID.JSON
 
 		curl --header "X-Vault-Token: $secretToken" \
 		'$vault_addr'/v1/my-secret/data/dnsPrefix -o dnsPrefix.JSON
