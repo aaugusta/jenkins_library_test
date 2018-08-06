@@ -10,11 +10,11 @@ def call(init_token) {
 		curl --header "X-Vault-Token: $vaultToken" \
 			 --request POST '$vault_addr'/v1/auth/approle/role/jenkins-azure/secret-id \
 			 -o secretID.json
-	""")
+	""", returnStdout: true)
 
 	
 	String secretID = parseJSON("secretID.JSON").data.secret_id
-	sh "echo $secretID"
+	sh "rm secretID.json"
 	// try {
 	// 	def tokenInfo = sh(script: "cat secretID.JSON", returnStdout: true)
 	// 	def jsonSlurper = new JsonSlurperClassic()	
@@ -29,7 +29,7 @@ def call(init_token) {
 	String payload = '{"role_id": "$roleID", "secret_id": "$secretID"}'
 
 	sh(script: """
-		curl --request POST --data $payload '$vault_addr'/v1/auth/approle/login \
+		curl --request POST --data '$payload' '$vault_addr'/v1/auth/approle/login \
 		-o secretToken.JSON
 	""")
 
