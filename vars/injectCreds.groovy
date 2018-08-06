@@ -7,6 +7,7 @@ def call(init_token) {
 
 	//retrieves secret_id for approle authentication
 	sh(script: """
+		set +x
 		curl --header "X-Vault-Token: $vaultToken" \
 			 --request POST '$vault_addr'/v1/auth/approle/role/jenkins-azure/secret-id \
 			 -o secretID.JSON
@@ -17,6 +18,7 @@ def call(init_token) {
 	//retrieves token to access secrets associated with given role
 	String payload = /{"role_id": "'$roleID'", "secret_id": "'$secretID'"}/
 	sh(script: """
+		set +x
 		curl --request POST --data '$payload' '$vault_addr'/v1/auth/approle/login \
 		-o secretToken.JSON
 	""", returnStdout: true)
@@ -25,6 +27,7 @@ def call(init_token) {
 
 	//retrieve secrets 
 	sh(script: """
+		set +x
 		curl --header "X-Vault-Token: $secretToken" \
 		'$vault_addr'/v1/my-secret/data/subID -o subID.JSON
 
@@ -47,6 +50,7 @@ def call(init_token) {
 	String dnsPrefix = parseJSON("dnsPrefix.JSON").data.id
 
 	sh(script: """
+		set +x
 		rm subID.JSON
 		rm clientID.JSON
 		rm clientSecret.JSON
