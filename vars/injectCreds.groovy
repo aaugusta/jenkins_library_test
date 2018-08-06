@@ -14,7 +14,7 @@ def call(init_token) {
 
 	
 	String secretID = parseJSON("secretID.JSON").data.secret_id
-	sh 'echo $secretID'
+	sh "echo $secretID"
 	// try {
 	// 	def tokenInfo = sh(script: "cat secretID.JSON", returnStdout: true)
 	// 	def jsonSlurper = new JsonSlurperClassic()	
@@ -47,16 +47,16 @@ def call(init_token) {
 	// 	export VAULT_ADDR=$vault_addr
 	// 	echo $output
 	// """
-}
 
-def parseJSON(file){
-	try{
-		def tokenInfo = sh(script: "cat $file", returnStdout: true)
-		def jsonSlurper = new JsonSlurperClassic()
-		info = jsonSlurper.parseText(tokenInfo)
-		return info
-	}
-	catch(Exception e) {
-		return e.getMessage()
+
+	def parseJSON(file) {
+		try{
+			def tokenInfo = sh(script: "cat $file", returnStdout: true)
+			def jsonSlurper = new JsonSlurperClassic()
+			info = jsonSlurper.parseText(tokenInfo)
+			return info
+		}
+		catch(Exception e) {
+			return e.getMessage()
 	}
 }
