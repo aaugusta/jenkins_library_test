@@ -22,7 +22,7 @@ def call(init_token) {
 		secretID = info.data.secret_id
 	}
 	catch(Exception e) {
-		println(e.message())
+		println(e.getMessage())
 	}
 
 	sh "echo $secretID"
