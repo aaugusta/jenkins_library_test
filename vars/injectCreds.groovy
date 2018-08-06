@@ -28,7 +28,7 @@ def call(init_token) {
 	//retrieve secrets 
 	sh """
 		curl --header "X-Vault-Token: $secretToken" \
-		'$vault_addr'/v1/secret/my-secret/data/subID -o sub.JSON
+		'$vault_addr'/v1/my-secret/data/subID -o sub.JSON
 		cat sub.JSON
 	"""
 
