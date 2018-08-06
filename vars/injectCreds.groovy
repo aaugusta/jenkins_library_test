@@ -23,6 +23,8 @@ def call(init_token) {
 		curl --request POST --data '$payload' '$vault_addr'/v1/auth/approle/login \
 		-o secretToken.JSON
 	""")
+	sh "ls"
+	sh "cat secretToken.JSON"
 	String secretToken = parseJSON("secretToken.JSON").auth.client_token
 	sh "cat secretToken.JSON; echo $secretToken"
 
