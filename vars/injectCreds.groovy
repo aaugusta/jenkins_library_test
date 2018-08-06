@@ -14,16 +14,17 @@ def call(init_token) {
 		cat secretID.JSON
 	""")
 
+	def info
 	String secretID = ""
 	try {
 		sh 'echo pls print'
+		def tokenInfo = sh(script: "cat secretID.JSON", returnStdout: true)
 		def jsonSlurper = new JsonSlurperClassic()
 		sh 'echo print again?'
 		sh 'ls'
 		sh 'cat secretID.JSON'
-		def tokenInfo = sh(script: "cat secretID.JSON", returnStdout: true)
-		def info = jsonSlurper.parseText(tokenInfo)
-		println(info.data.secret_id)
+		
+		info = jsonSlurper.parseText(tokenInfo)
 		secretID = info.data.secret_id
 	}
 	catch(Exception e) {
@@ -31,25 +32,25 @@ def call(init_token) {
 		println(e.getMessage())
 	}
 
-	sh "echo $secretID"
-	String secretToken = sh(script: """
+	// sh "echo $secretID"
+	// String secretToken = sh(script: """
 
-		export VAULT_ADDR=$vault_addr
-		vault write -field=token auth/approle/login role_id=$roleID secret_id=$secretID
-	""", returnStdout: true)
+	// 	export VAULT_ADDR=$vault_addr
+	// 	vault write -field=token auth/approle/login role_id=$roleID secret_id=$secretID
+	// """, returnStdout: true)
 
-	String output = sh(script: """
+	// String output = sh(script: """
 	
-		export VAULT_ADDR=$vault_addr
-		vault login $secretToken > /dev/null
-		vault kv get -field=id my-secret/data/subID
-		vault kv get -field=id my-secret/data/clientID
-		vault kv get -field=id my-secret/data/clientSecret
-		vault kv get -field=id my-secret/data/tenantID  
-	""", returnStdout: true)
+	// 	export VAULT_ADDR=$vault_addr
+	// 	vault login $secretToken > /dev/null
+	// 	vault kv get -field=id my-secret/data/subID
+	// 	vault kv get -field=id my-secret/data/clientID
+	// 	vault kv get -field=id my-secret/data/clientSecret
+	// 	vault kv get -field=id my-secret/data/tenantID  
+	// """, returnStdout: true)
 
-	sh """
-		export VAULT_ADDR=$vault_addr
-		echo $output
-	"""
+	// sh """
+	// 	export VAULT_ADDR=$vault_addr
+	// 	echo $output
+	// """
 }
