@@ -10,7 +10,7 @@ def call(init_token) {
 		export VAULT_ADDR=$vault_addr
 		curl --header "X-Vault-Token: $vaultToken" \
 			 --request POST '$vault_addr'/v1/auth/approle/role/jenkins-azure/secret-id \
-			 > secretID.JSON
+			 -o secretID.json
 		cat secretID.JSON
 	""")
 
@@ -32,7 +32,7 @@ def call(init_token) {
 		println(e.getMessage())
 	}
 
-	// sh "echo $secretID"
+	sh "echo $secretID"
 	// String secretToken = sh(script: """
 
 	// 	export VAULT_ADDR=$vault_addr
