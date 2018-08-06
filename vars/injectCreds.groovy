@@ -13,20 +13,25 @@ def call(init_token) {
 			 -o secretID.JSON
 	""", returnStdout: true)
 	String secretID = parseJSON("secretID.JSON").data.secret_id
-	sh "rm secretID.JSON; echo $secretID"
+	sh "rm secretID.JSON"
 
 
 
 	//retrieves token to access secrets associated with given role
-	
 	String payload = /{"role_id": "'$roleID'", "secret_id": "'$secretID'"}/
 	sh(script: """
 		curl --request POST --data '$payload' '$vault_addr'/v1/auth/approle/login \
 		-o secretToken.JSON
 	""")
-	sh "cat secretToken.JSON"
 	String secretToken = parseJSON("secretToken.JSON").auth.client_token
-	sh "echo $secretToken"
+
+
+	//retrieve secrets 
+	sh """
+		curl --header "X-Vault-Token: $secretToken" \
+		'$vault_addr'/v1/secret/my-secret/data/subID -o sub.JSON
+		cat sub.JSON
+	"""
 
 	// String output = sh(script: """
 	
