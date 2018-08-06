@@ -12,9 +12,9 @@ def call(init_token) {
 			 -o secretID.json
 	""")
 
-	def info
+	
 	String secretID = parseJSON("secretID.JSON").data.secret_id
-	sh 'cat '
+	sh 'cat $secretID'
 	// try {
 	// 	def tokenInfo = sh(script: "cat secretID.JSON", returnStdout: true)
 	// 	def jsonSlurper = new JsonSlurperClassic()	
