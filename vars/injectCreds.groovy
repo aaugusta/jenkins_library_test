@@ -17,12 +17,13 @@ def call(init_token) {
 	def info
 	String secretID = ""
 	try {
-		sh 'echo pls print'
+		
+		sh 'cat secretID.JSON'
+		sh 'ls'
 		def tokenInfo = sh(script: "cat secretID.JSON", returnStdout: true)
 		def jsonSlurper = new JsonSlurperClassic()
 		sh 'echo print again?'
-		sh 'ls'
-		sh 'cat secretID.JSON'
+		
 		
 		info = jsonSlurper.parseText(tokenInfo)
 		secretID = info.data.secret_id
