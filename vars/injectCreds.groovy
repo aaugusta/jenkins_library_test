@@ -5,33 +5,25 @@ def call(init_token) {
 	String roleID = "20c5906d-6106-696e-9288-7e274df11f13"
 	String vault_addr = 'http://127.0.0.1:8200'
 
-
+	//retrieves secret_id for approle authentication
 	sh(script: """
 		curl --header "X-Vault-Token: $vaultToken" \
 			 --request POST '$vault_addr'/v1/auth/approle/role/jenkins-azure/secret-id \
 			 -o secretID.json
 	""", returnStdout: true)
-
-	
 	String secretID = parseJSON("secretID.JSON").data.secret_id
 	sh "rm secretID.json"
-	// try {
-	// 	def tokenInfo = sh(script: "cat secretID.JSON", returnStdout: true)
-	// 	def jsonSlurper = new JsonSlurperClassic()	
-	// 	info = jsonSlurper.parseText(tokenInfo)
-	// 	secretID = info.data.secret_id
-	// }
-	// catch(Exception e) {
-	// 	println(e.getMessage())
-	// }
 
 
+
+	//retrieves token to access secrets associated with given role
 	String payload = '{"role_id": "$roleID", "secret_id": "$secretID"}'
-
 	sh(script: """
 		curl --request POST --data '$payload' '$vault_addr'/v1/auth/approle/login \
 		-o secretToken.JSON
 	""")
+	String secretToken = parseJSON("secretToken.JSON").client_token
+	sh "echo $secretToken"
 
 	// String output = sh(script: """
 	
