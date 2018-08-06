@@ -40,7 +40,7 @@ def call(init_token) {
 		curl --header "X-Vault-Token: $secretToken" \
 		'$vault_addr'/v1/my-secret/data/dnsPrefix -o dnsPrefix.JSON
 	"""
-	String subID = parseJSON("sub.JSON").data.id
+	String subID = parseJSON("subID.JSON").data.id
 	String clientID = parseJSON("clientID.JSON").data.id
 	String clientSecret = parseJSON("clientSecret.JSON").data.id
 	String tenantID = parseJSON("tenantID.JSON").data.id
@@ -79,7 +79,7 @@ def parseJSON(file) {
 		def tokenInfo = sh(script: "cat $file", returnStdout: true)
 		def jsonSlurper = new JsonSlurperClassic()
 		info = jsonSlurper.parseText(tokenInfo)
-		sh "rm '$file'"
+		sh "rm $file"
 		return info
 
 	}
