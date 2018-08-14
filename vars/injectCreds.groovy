@@ -33,8 +33,6 @@ def call(init_token) {
 
 	//retrieve Role ID using project name 
 	sh(script: """
-		cat '$project'
-
 		curl --header "X-Vault-Token: $libToken" \
 			'$vault_addr'/v1/secret/roles/'$project' -o role.JSON
 	""", returnStdout: true)
