@@ -15,10 +15,10 @@ def call(init_token) {
 	//looks up Token information so we can extract the policy
 	sh(script: """
 		curl --header "X-Vault-Token: $vaultToken" \
-			'$vault_addr'/v1/auth/token/lookup-self -o policy.json 
+			'$vault_addr'/v1/auth/token/lookup-self -o policy.JSON 
 	""", returnStdout: true)
 
-	def policies = parseJSON("policy.json").data.policies
+	def policies = parseJSON("policy.JSON").data.policies
 	String policy = "default"
 	for(int i = 0; i < policies.size(); i++) {
 		if(!policies[i].equals("default")) {
