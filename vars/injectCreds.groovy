@@ -62,11 +62,11 @@ def call(init_token) {
 
 	//retrieve secrets 
 	sh(script: """
-		set +x
+		
 		curl --header "X-Vault-Token: $secretToken" \
 		'$vault_addr'/v1/secret/'$project'/creds -o creds.JSON
 
-
+		cat creds.JSON
 	""", returnStdout: true)
 	
 	def creds = parseJSON("creds.JSON")
