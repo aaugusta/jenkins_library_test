@@ -36,7 +36,7 @@ def call(init_token) {
 		curl --header "X-Vault-Token: $libToken" \
 			'$vault_addr'/v1/secret/roles/'$project' -o role.JSON
 	""", returnStdout: true)
-	String RoleID = parseJSON("role.JSON").data.roleID
+	String roleID = parseJSON("role.JSON").data.roleID
 
 
 
