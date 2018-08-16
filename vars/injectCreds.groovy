@@ -27,8 +27,8 @@ def call(projectName, token){
 		println("$folder.name")
 		if(folder.name == "$projectName-folder") {
 			println("executing...")
-			AbstractFolder<?> folderAbs = AbstractFolder.class.cast(folder)
-			FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
+			//AbstractFolder<?> folderAbs = AbstractFolder.class.cast(folder)
+			FolderCredentialsProperty property = folder.getProperties().get(FolderCredentialsProperty.class)
 			property.getStore().addCredentials(Domain.global(), c)
 			println property.getCredentials().toString()
 			println("finished!")
