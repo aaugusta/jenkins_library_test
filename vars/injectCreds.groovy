@@ -14,21 +14,22 @@ import jenkins.model.*
 def call(projectName, token){
 
 
-sh 'echo starting...'
-String id = "vault_token"
-//println(jenkins.model.Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.CredentialsProvider.all()'))
-Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "description: Token for passing to library functions", Secret.fromString("$token"))
+	sh 'echo starting...'
+	String id = "vault_token"
+	//println(jenkins.model.Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.CredentialsProvider.all()'))
+	Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "description: Token for passing to library functions", Secret.fromString("$token"))
 
-for (folder in Jenkins.instance.getAllItems(Folder.class)) {
-	println(folder.name)
-	sh 'echo "$folder.name"'
-  //if(folder.name.equals('FolderName')){
-	// AbstractFolder<?> folderAbs = AbstractFolder.class.cast(folder)
- //    FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
- //    property.getStore().addCredentials(Domain.global(), c)
- //    println property.getCredentials().toString()
-  //}
-}
+	items = Jenkins.instance.getAllItems(Folder.class)
+	for (folder in items) {
+		println(folder.name)
+		sh 'echo "$folder.name"'
+	  //if(folder.name.equals('FolderName')){
+		// AbstractFolder<?> folderAbs = AbstractFolder.class.cast(folder)
+	 //    FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
+	 //    property.getStore().addCredentials(Domain.global(), c)
+	 //    println property.getCredentials().toString()
+	  //}
+	}
 
 
 }
