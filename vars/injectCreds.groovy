@@ -19,18 +19,16 @@ String id = "vault_token"
 //println(jenkins.model.Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.CredentialsProvider.all()'))
 Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "description: Token for passing to library functions", Secret.fromString("$token"))
 
+for (folder in jenkins.getAllItems(Folder.class)) {
+	println(folder.name)
+	sh 'echo "$folder.name"'
+  //if(folder.name.equals('FolderName')){
+	// AbstractFolder<?> folderAbs = AbstractFolder.class.cast(folder)
+ //    FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
+ //    property.getStore().addCredentials(Domain.global(), c)
+ //    println property.getCredentials().toString()
+  //}
+}
 
-Jenkins.instance.getAllItems(Folder.class)
-    .findAll{}
-    .each{
-    	println(it.name)
-    	sh 'echo "$it.name"'
-        sh 'echo found it'
-//         AbstractFolder<?> folderAbs = AbstractFolder.class.cast(it)
-//         FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
-//         if(property != null){
-//             property.getStore().addCredentials(Domain.global(), c)
-//             println property.getCredentials().toString()
-//         }
- 	}
+
 }
