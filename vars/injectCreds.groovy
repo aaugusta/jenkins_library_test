@@ -4,7 +4,9 @@ import com.cloudbees.hudson.plugins.folder.Folder
 import com.cloudbees.plugins.credentials.impl.*
 import com.cloudbees.plugins.credentials.*
 import com.cloudbees.plugins.credentials.domains.*
+import org.jenkinsci.plugins.plaincredentials.*
 import org.jenkinsci.plugins.plaincredentials.impl.*
+
 
 
 def call(projectName, token){
