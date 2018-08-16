@@ -24,10 +24,12 @@ def call(projectName, token){
 
 	for (folder in items) {
 	  if(folder.name.equals("'$projectName'-folder")){
+	  	sh 'echo executing...'
 		AbstractFolder<?> folderAbs = AbstractFolder.class.cast(folder)
 	    FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
 	    property.getStore().addCredentials(Domain.global(), c)
 	    println property.getCredentials().toString()
+	  	sh 'echo finished!'
 	  }
 	}
 
