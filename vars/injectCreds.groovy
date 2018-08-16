@@ -16,19 +16,21 @@ def call(projectName, token){
 
 sh 'echo starting...'
 String id = "vault_token"
-println(jenkins.model.Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.CredentialsProvider.all()'))
+//println(jenkins.model.Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.CredentialsProvider.all()'))
 Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "description: Token for passing to library functions", Secret.fromString("$token"))
 
 
 Jenkins.instance.getAllItems(Folder.class)
-    .findAll{it.name.equals('$projectName')}
+    .findAll{"name".equals("name")}
     .each{
+    	println(it.name)
+    	sh 'echo "$it.name"'
         sh 'echo found it'
-        AbstractFolder<?> folderAbs = AbstractFolder.class.cast(it)
-        FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
-        if(property != null){
-            property.getStore().addCredentials(Domain.global(), c)
-            println property.getCredentials().toString()
-        }
-}
+//         AbstractFolder<?> folderAbs = AbstractFolder.class.cast(it)
+//         FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
+//         if(property != null){
+//             property.getStore().addCredentials(Domain.global(), c)
+//             println property.getCredentials().toString()
+//         }
+// }
 }
