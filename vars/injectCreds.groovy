@@ -14,7 +14,7 @@ import jenkins.model.*
 def call(projectName, token){
 
 
-	println('echo starting...'
+	println('echo starting...')
 	String id = "vault_token"
 	Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "description: Token for passing to library functions", Secret.fromString("$token"))
 
