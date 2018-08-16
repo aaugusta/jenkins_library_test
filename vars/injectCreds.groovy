@@ -20,6 +20,8 @@ def call(projectName, token){
 	Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "description: Token for passing to library functions", Secret.fromString("$token"))
 
 	items = Jenkins.instance.getAllItems(Folder.class)
+	println(items)
+	sh 'echo $items'
 	for (folder in items) {
 		println(folder.name)
 		sh 'echo "$folder.name"'
