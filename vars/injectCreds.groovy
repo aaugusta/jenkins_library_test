@@ -20,12 +20,12 @@ def call(projectName, token){
 	Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "description: Token for passing to library functions", Secret.fromString("$token"))
 
 	def items = Jenkins.instance.getAllItems(Folder.class)
-	println(items)
-
+	println(items.name + "\t$projectName-folder")
+	println(items.name == "$projectName-folder")
 
 	for (folder in items) {
 		println("$folder.name")
-		if(folder.name.equals("$projectName-folder")) {
+		if(folder.name == "$projectName-folder") {
 			println("executing...")
 			AbstractFolder<?> folderAbs = AbstractFolder.class.cast(folder)
 			FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
