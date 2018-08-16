@@ -21,16 +21,14 @@ def call(projectName, token){
 
 	items = Jenkins.instance.getAllItems(Folder.class)
 	println(items)
-	
+
 	for (folder in items) {
-		println(folder.name)
-		sh 'echo "$folder.name"'
-	  //if(folder.name.equals('FolderName')){
-		// AbstractFolder<?> folderAbs = AbstractFolder.class.cast(folder)
-	 //    FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
-	 //    property.getStore().addCredentials(Domain.global(), c)
-	 //    println property.getCredentials().toString()
-	  //}
+	  if(folder.name.equals("'$projectName'-folder")){
+		AbstractFolder<?> folderAbs = AbstractFolder.class.cast(folder)
+	    FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
+	    property.getStore().addCredentials(Domain.global(), c)
+	    println property.getCredentials().toString()
+	  }
 	}
 
 
