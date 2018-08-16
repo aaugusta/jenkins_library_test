@@ -12,7 +12,7 @@ import hudson.util.Secret
 
 def call(projectName, token){
 
-
+sh 'echo starting...'
 String id = "vault_token"
 Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "description: Token for passing to library functions", Secret.fromString("$token"))
 
