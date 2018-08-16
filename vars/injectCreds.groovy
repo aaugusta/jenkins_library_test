@@ -32,5 +32,5 @@ Jenkins.instance.getAllItems(Folder.class)
 //             property.getStore().addCredentials(Domain.global(), c)
 //             println property.getCredentials().toString()
 //         }
-// }
+ 	}
 }
