@@ -14,23 +14,18 @@ import jenkins.model.*
 def call(projectName, token){
 
 
-	sh 'echo starting...'
+	println('echo starting...'
 	String id = "vault_token"
-	//println(jenkins.model.Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.CredentialsProvider.all()'))
 	Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "description: Token for passing to library functions", Secret.fromString("$token"))
 
 	def items = Jenkins.instance.getAllItems(Folder.class)
-	println(items.name + "\t$projectName-folder")
-	println(items.name == "$projectName-folder")
 
 	for (folder in items) {
 		println("$folder.name")
 		if(folder.name == "$projectName-folder") {
 			println("executing...")
-			//AbstractFolder<?> folderAbs = AbstractFolder.class.cast(folder)
 			FolderCredentialsProperty property = folder.getProperties().get(FolderCredentialsProperty.class)
 			property.getStore().addCredentials(Domain.global(), c)
-			println property.getCredentials().toString()
 			println("finished!")
 		}
 	}
