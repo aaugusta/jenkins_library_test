@@ -7,13 +7,16 @@ import com.cloudbees.plugins.credentials.domains.*
 import org.jenkinsci.plugins.plaincredentials.*
 import org.jenkinsci.plugins.plaincredentials.impl.*
 import hudson.util.Secret
+import jenkins.model.*
 
 
 
 def call(projectName, token){
 
+
 sh 'echo starting...'
 String id = "vault_token"
+println(jenkins.model.Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.CredentialsProvider.all()'))
 Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "description: Token for passing to library functions", Secret.fromString("$token"))
 
 
