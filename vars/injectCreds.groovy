@@ -21,7 +21,7 @@ Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "descript
 
 
 Jenkins.instance.getAllItems(Folder.class)
-    .findAll{"name".equals("name")}
+    .findAll{}
     .each{
     	println(it.name)
     	sh 'echo "$it.name"'
