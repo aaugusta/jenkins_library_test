@@ -13,7 +13,7 @@ import jenkins.model.*
 
 def call(projectName, token){
 
-
+jenkins = Jenkins.instance
 sh 'echo starting...'
 String id = "vault_token"
 //println(jenkins.model.Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.CredentialsProvider.all()'))
