@@ -19,11 +19,10 @@ def call(projectName, token){
 	//println(jenkins.model.Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.CredentialsProvider.all()'))
 	Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "description: Token for passing to library functions", Secret.fromString("$token"))
 
-	def items = Jenkins.instance.getAllItems()
-	println(items[0].getProperties())
-	sh 'echo $items'
-	sh 'echo anything'
-	for (item in items) {
+	items = Jenkins.instance.getAllItems(Folder.class)
+	println(items)
+	
+	for (folder in items) {
 		println(folder.name)
 		sh 'echo "$folder.name"'
 	  //if(folder.name.equals('FolderName')){
