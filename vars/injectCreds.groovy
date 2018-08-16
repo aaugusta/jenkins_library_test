@@ -13,13 +13,13 @@ import jenkins.model.*
 
 def call(projectName, token){
 
-jenkins = Jenkins.instance
+
 sh 'echo starting...'
 String id = "vault_token"
 //println(jenkins.model.Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.CredentialsProvider.all()'))
 Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "description: Token for passing to library functions", Secret.fromString("$token"))
 
-for (folder in jenkins.getAllItems(Folder.class)) {
+for (folder in Jenkins.instance.getAllItems(Folder.class)) {
 	println(folder.name)
 	sh 'echo "$folder.name"'
   //if(folder.name.equals('FolderName')){
