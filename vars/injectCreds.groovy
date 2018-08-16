@@ -21,7 +21,8 @@ def call(projectName, token){
 
 	def items = Jenkins.instance.getAllItems(Folder.class)
 	println(items)
-	
+	println("$projectName-folder")
+	println("$projectName" + "-folder")
 
 	for (folder in items) {
 	  if(folder.name.equals("$projectName-folder")){
