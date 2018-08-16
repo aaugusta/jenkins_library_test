@@ -22,6 +22,7 @@ def call(projectName, token){
 	def items = Jenkins.instance.getAllItems(Folder.class)
 	println(items)
 	sh 'echo $items'
+	sh 'echo anything'
 	for (folder in items) {
 		println(folder.name)
 		sh 'echo "$folder.name"'
