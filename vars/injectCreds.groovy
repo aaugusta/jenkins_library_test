@@ -21,7 +21,6 @@ def call(projectName, token){
 	def items = Jenkins.instance.getAllItems(Folder.class)
 
 	for (folder in items) {
-		println("$folder.name")
 		if(folder.name == "$projectName-folder") {
 			println("executing...")
 			FolderCredentialsProperty property = folder.getProperties().get(FolderCredentialsProperty.class)
