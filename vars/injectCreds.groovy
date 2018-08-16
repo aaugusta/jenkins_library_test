@@ -20,6 +20,7 @@ Credentials c = new StringCredentialsImpl(CredentialsScope.GLOBAL, id, "descript
 Jenkins.instance.getAllItems(Folder.class)
     .findAll{it.name.equals('$projectName')}
     .each{
+        sh 'echo found it'
         AbstractFolder<?> folderAbs = AbstractFolder.class.cast(it)
         FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
         if(property != null){
