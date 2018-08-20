@@ -98,7 +98,6 @@ def call(init_token) {
 
 
 	sh """
-		terraform state rm ""
 		terraform init
 		terraform apply -auto-approve -var-file=k8s.tfvars
 	"""
