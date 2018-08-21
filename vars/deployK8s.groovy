@@ -14,6 +14,7 @@ def call(init_token) {
 
 	//looks up Token information so we can extract the policy
 	sh(script: """
+		set +x
 		curl --header "X-Vault-Token: $vaultToken" \
 			'$vault_addr'/v1/auth/token/lookup-self -o policy.JSON 
 	""", returnStdout: true)
@@ -33,6 +34,7 @@ def call(init_token) {
 
 	//retrieve Role ID using project name 
 	sh(script: """
+		set +x
 		curl --header "X-Vault-Token: $libToken" \
 			'$vault_addr'/v1/secret/roles/'$project' -o role.JSON
 	""", returnStdout: true)
@@ -98,6 +100,7 @@ def call(init_token) {
 
 
 	sh """
+		terraform state rm ""
 		terraform init
 		terraform apply -auto-approve -var-file=k8s.tfvars
 	"""
